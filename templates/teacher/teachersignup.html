@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <style>
+
+        form{
+           margin: 50px; 
+          
+        }
+
+    </style>
+  </head>
+  <body>
+    {% include "exam/navbar.html" %}
+ 
+<script>
+  function checkpass() {
+        if (document.signup.pwd.value != document.signup.cpwd.value) {
+            alert('Password Does Not Match')
+            document.signup.cpwd.focus();
+            return false;
+        }
+        return true;
+    }
+    function validpayment() {
+        let fn = document.getElementById('fname').value;
+        if (!(fn.match(/^[A-Za-z\s]+$/))) {
+            alert("Enter Valid Your Name");
+            return false;
+        }
+        let ln = document.getElementById('lname').value;
+        if (!(ln.match(/^[A-Za-z\s]+$/))) {
+            alert("Enter Valid Your Name");
+            return false;
+        }
+        let con = document.getElementById('contact').value;
+        if (con.length != 10) {
+            alert("Contact Number Must be 10 digit");
+            return false;
+        }
+    }
+</script>
+
+
+<br><br><br>
+<div class="container">
+  <h3 style="text-align: center;">Teacher Signup Form</h3>
+<form method="POST" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" class="form-control" id="fname" placeholder="First Name" >
+        </div>
+        <div class="form-group col-md-6">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" class="form-control" id="lname" placeholder="Last Name">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="mobile">Contact</label>
+          <input type="number" name="mobile" class="form-control" id="contact" placeholder="Contact Number">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="address">Address</label>
+          {% render_field teacherForm.address|attr:'required:true'  class="form-control" placeholder="Address" %}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="username">Username</label>
+          {% render_field userForm.username|attr:'required:true'  class="form-control" placeholder="username" %}
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Password</label>
+          {% render_field userForm.password|attr:'required:true'  class="form-control" placeholder="password" %}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="profile_pic">Profile Picture</label>
+          {% render_field teacherForm.profile_pic|attr:'required:true' class="form-control" placeholder="" %}
+        </div>
+        
+      </div>
+
+
+    <button type="submit" class="btn btn-success" style="border-radius:0px;" onclick="return validpayment()">Sign Up</button>
+  </form>
+</div>
+
+
+<br><br>
+{% include "exam/footer.html" %}
+  </body>
+</html>
